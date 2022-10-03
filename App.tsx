@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Welcome } from './src/pages/Welcome';
+import { UserIdentification } from './src/pages/UserIdentification';
 import {
   useFonts,
   Jost_400Regular,
@@ -13,7 +14,8 @@ export default function App() {
 
   return (
     <>
-      <Welcome />
+      {/* <Welcome /> */}
+      <UserIdentification />
       <StatusBar
         translucent={false}
         backgroundColor='transparent'
