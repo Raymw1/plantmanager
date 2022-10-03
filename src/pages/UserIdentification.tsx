@@ -8,7 +8,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+
 import { Button } from '../components/Button';
+import { ScreenProps } from '../routes/stack.routes';
+
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -16,6 +20,7 @@ export function UserIdentification() {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const [name, setName] = useState('');
+  const navigation = useNavigation<ScreenProps>();
 
   function handleInputBlur() {
     setIsFocused(false);
@@ -29,6 +34,10 @@ export function UserIdentification() {
   function handleInputChange(value: string) {
     setIsFilled(!!value);
     setName(value);
+  }
+
+  function handleSubmit() {
+    navigation.navigate('Confirmation');
   }
 
   return (
@@ -55,7 +64,7 @@ export function UserIdentification() {
               onChangeText={handleInputChange}
             />
             <View style={styles.footer}>
-              <Button />
+              <Button onPress={handleSubmit} title='Confirm' />
             </View>
           </View>
         </View>

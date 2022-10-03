@@ -13,7 +13,7 @@ export function Confirmation() {
           Let's start to taking care of your plants.
         </Text>
         <View style={styles.footer}>
-          <Button />
+          <Button title='Start' />
         </View>
       </View>
     </SafeAreaView>
