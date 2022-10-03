@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -7,6 +8,7 @@ import {
   Text,
   TextInput,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -46,28 +48,32 @@ export function UserIdentification() {
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={styles.content}>
-          <View style={styles.form}>
-            <View style={styles.header}>
-              <Text style={styles.emoji}>{isFilled ? '😄' : '😀'}</Text>
-              <Text style={styles.title}>How can we{'\n'}call you?</Text>
-            </View>
-            <TextInput
-              style={[
-                styles.input,
-                (isFocused || isFilled) && { borderColor: colors.green },
-              ]}
-              placeholder='Insert your name'
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              value={name}
-              onChangeText={handleInputChange}
-            />
-            <View style={styles.footer}>
-              <Button onPress={handleSubmit} title='Confirm' />
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+        >
+          <View style={styles.content}>
+            <View style={styles.form}>
+              <View style={styles.header}>
+                <Text style={styles.emoji}>{isFilled ? '😄' : '😀'}</Text>
+                <Text style={styles.title}>How can we{'\n'}call you?</Text>
+              </View>
+              <TextInput
+                style={[
+                  styles.input,
+                  (isFocused || isFilled) && { borderColor: colors.green },
+                ]}
+                placeholder='Insert your name'
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                value={name}
+                onChangeText={handleInputChange}
+              />
+              <View style={styles.footer}>
+                <Button onPress={handleSubmit} title='Confirm' />
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
