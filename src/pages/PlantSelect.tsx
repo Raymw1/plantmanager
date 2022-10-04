@@ -29,6 +29,7 @@ interface PlantProps {
 export function PlantSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
   const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [environmentSelected, setEnvironmentSelected] = useState('all');
 
   useEffect(() => {
     api
@@ -64,7 +65,13 @@ export function PlantSelect() {
       <View>
         <FlatList
           data={environments}
-          renderItem={({ item }) => <EnvironmentButton title={item.title} />}
+          renderItem={({ item }) => (
+            <EnvironmentButton
+              title={item.title}
+              active={environmentSelected === item.key}
+              onPress={() => setEnvironmentSelected(item.key)}
+            />
+          )}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.environmentList}
