@@ -3,6 +3,7 @@ import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { EnvironmentButton } from '../components/EnvironmentButton';
 
 import { Header } from '../components/Header';
+import { PlantCardPrimary } from '../components/PlantCardPrimary';
 import api from '../services/api';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -12,19 +13,45 @@ interface EnvironmentProps {
   title: string;
 }
 
+interface PlantProps {
+  id: number;
+  name: string;
+  about: string;
+  water_tips: string;
+  photo: string;
+  environments: string[];
+  frequency: {
+    times: number;
+    repeat_every: string;
+  };
+}
+
 export function PlantSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
+  const [plants, setPlants] = useState<PlantProps[]>([]);
 
   useEffect(() => {
-    api.get('/plants_environments').then((response) => {
-      setEnvironments([
-        {
-          key: 'all',
-          title: 'All',
-        },
-        ...response.data,
-      ]);
-    });
+    api
+      .get('/plants_environments', {
+        params: { _sort: 'title', _order: 'asc' },
+      })
+      .then((response) => {
+        setEnvironments([
+          {
+            key: 'all',
+            title: 'All',
+          },
+          ...response.data,
+        ]);
+      });
+  }, []);
+
+  useEffect(() => {
+    api
+      .get('/plants', { params: { _sort: 'name', _order: 'asc' } })
+      .then((response) => {
+        setPlants(response.data);
+      });
   }, []);
 
   return (
@@ -41,6 +68,14 @@ export function PlantSelect() {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.environmentList}
+        />
+      </View>
+      <View style={styles.plants}>
+        <FlatList
+          data={plants}
+          renderItem={({ item }) => <PlantCardPrimary data={item} />}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
         />
       </View>
     </SafeAreaView>
@@ -75,5 +110,10 @@ const styles = StyleSheet.create({
     paddingLeft: 32,
     paddingRight: 10,
     marginVertical: 32,
+  },
+  plants: {
+    flex: 1,
+    paddingHorizontal: 32,
+    justifyContent: 'center',
   },
 });
