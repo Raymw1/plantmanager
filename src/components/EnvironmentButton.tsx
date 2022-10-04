@@ -26,11 +26,13 @@ export function EnvironmentButton({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.shape,
-    width: 76,
+    paddingHorizontal: 18,
+    minWidth: 76,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
+    marginRight: 5,
   },
   containerActive: {
     backgroundColor: colors.green_light,
