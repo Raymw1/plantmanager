@@ -11,7 +11,10 @@ export function Header() {
         <Text style={styles.greeting}>Hello,</Text>
         <Text style={styles.username}>Rayan</Text>
       </View>
-      <Image source={{ uri: 'https://github.com/Raymw1.png' }} style={styles.image} />
+      <Image
+        source={{ uri: 'https://github.com/Raymw1.png' }}
+        style={styles.image}
+      />
     </View>
   );
 }
@@ -21,9 +24,9 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical: 20,
     alignItems: 'center',
     /* marginTop: getStatusBarHeight(), */
-    padding: 20,
   },
   greeting: {
     fontSize: 32,
