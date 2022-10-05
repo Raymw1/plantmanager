@@ -87,6 +87,7 @@ export function PlantSelect() {
           setFilteredPlants(data);
         }
         setLoading(false);
+        setLoadingMore(false);
       });
   }
 
@@ -98,7 +99,6 @@ export function PlantSelect() {
 
   useEffect(() => {
     fetchPlants();
-    setLoadingMore(false);
   }, [page]);
 
   useEffect(() => {

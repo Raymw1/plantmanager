@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -39,6 +40,7 @@ export function UserIdentification() {
   }
 
   function handleSubmit() {
+    if (!name) return Alert.alert('Tell us how can we call you 🤔');
     navigation.navigate('Confirmation');
   }
 
@@ -48,9 +50,7 @@ export function UserIdentification() {
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.content}>
             <View style={styles.form}>
               <View style={styles.header}>
