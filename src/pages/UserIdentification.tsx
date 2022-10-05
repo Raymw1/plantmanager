@@ -12,6 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Button } from '../components/Button';
 import { ScreenProps } from '../routes/stack.routes';
@@ -39,8 +40,9 @@ export function UserIdentification() {
     setName(value);
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!name) return Alert.alert('Tell us how can we call you 🤔');
+    await AsyncStorage.setItem('@plantmanager:username', name);
     navigation.navigate('Confirmation');
   }
 
