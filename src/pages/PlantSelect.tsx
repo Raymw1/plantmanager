@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { EnvironmentButton } from '../components/EnvironmentButton';
 
+import { EnvironmentButton } from '../components/EnvironmentButton';
 import { Header } from '../components/Header';
+import { Load } from '../components/Load';
 import { PlantCardPrimary } from '../components/PlantCardPrimary';
+
 import api from '../services/api';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -31,6 +33,7 @@ export function PlantSelect() {
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState('all');
+  const [loading, setLoading] = useState(true);
 
   function handleEnvironmentSelected(environment: string) {
     setEnvironmentSelected(environment);
@@ -63,8 +66,12 @@ export function PlantSelect() {
       .get('/plants', { params: { _sort: 'name', _order: 'asc' } })
       .then((response) => {
         setPlants(response.data);
+        setFilteredPlants(response.data);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) return <Load />;
 
   return (
     <SafeAreaView style={styles.container}>
