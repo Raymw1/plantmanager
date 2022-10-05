@@ -6,7 +6,8 @@ import {
 import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UserIdentification';
 import { Confirmation } from '../pages/Confirmation';
-import { PlantSelect } from '../pages/PlantSelect';
+import { PlantProps, PlantSelect } from '../pages/PlantSelect';
+import { PlantSave } from '../pages/PlantSave';
 
 import colors from '../styles/colors';
 
@@ -15,6 +16,7 @@ type RootStackParamList = {
   UserIdentification: undefined;
   Confirmation: undefined;
   PlantSelect: undefined;
+  PlantSave: { plant: PlantProps };
 };
 
 export type ScreenProps = StackNavigationProp<RootStackParamList>;
@@ -35,6 +37,7 @@ const AppRoutes: React.FC = () => (
     />
     <stackRoutes.Screen name='Confirmation' component={Confirmation} />
     <stackRoutes.Screen name='PlantSelect' component={PlantSelect} />
+    <stackRoutes.Screen name='PlantSave' component={PlantSave} />
   </stackRoutes.Navigator>
 );
 
