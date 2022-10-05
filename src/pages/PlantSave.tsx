@@ -1,7 +1,21 @@
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  Alert,
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { SvgFromUri } from 'react-native-svg';
 import { useRoute } from '@react-navigation/core';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import { format, isBefore } from 'date-fns';
 
 import { Button } from '../components/Button';
 import waterdrop from '../assets/waterdrop.png';
@@ -15,8 +29,22 @@ interface Params {
 }
 
 export function PlantSave() {
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
   const route = useRoute();
   const { plant } = route.params as Params;
+
+  function handleChangeTime(
+    event: DateTimePickerEvent,
+    dateTime: Date | undefined
+  ) {
+    if (Platform.OS === 'android') setShowDatePicker((oldState) => !oldState);
+    if (dateTime && isBefore(dateTime, new Date())) {
+      setSelectedDateTime(new Date());
+      return Alert.alert('Select a time in the future! ⏰');
+    }
+    if (dateTime) setSelectedDateTime(dateTime);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,6 +59,24 @@ export function PlantSave() {
           <Text style={styles.tipText}>{plant.water_tips}</Text>
         </View>
         <Text style={styles.alertLabel}>Choose the best time to remember:</Text>
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDateTime}
+            mode='time'
+            onChange={handleChangeTime}
+          />
+        )}
+        {Platform.OS === 'android' && (
+          <TouchableOpacity
+            style={styles.dateTimePickerButton}
+            onPress={() => setShowDatePicker((oldState) => !oldState)}
+          >
+            <Text style={styles.dateTimePickerText}>{`Change ${format(
+              selectedDateTime,
+              'HH:mm'
+            )}`}</Text>
+          </TouchableOpacity>
+        )}
         <Button title='Register plant' onPress={() => {}} />
       </View>
     </SafeAreaView>
@@ -98,5 +144,15 @@ const styles = StyleSheet.create({
     color: colors.heading,
     fontSize: 12,
     marginBottom: 5,
+  },
+  dateTimePickerButton: {
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  dateTimePickerText: {
+    color: colors.heading,
+    fontSize: 24,
+    fontFamily: fonts.text,
   },
 });
