@@ -22,7 +22,7 @@ import waterdrop from '../assets/waterdrop.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
-import type { PlantProps } from './PlantSelect';
+import { PlantProps, savePlant } from '../libs/storage';
 
 interface Params {
   plant: PlantProps;
@@ -40,10 +40,19 @@ export function PlantSave() {
   ) {
     if (Platform.OS === 'android') setShowDatePicker((oldState) => !oldState);
     if (dateTime && isBefore(dateTime, new Date())) {
-      setSelectedDateTime(new Date());
-      return Alert.alert('Select a time in the future! ⏰');
+      dateTime.setDate(dateTime.getDate() + 1);
+      setSelectedDateTime(dateTime);
+      /* return Alert.alert('Select a time in the future! ⏰'); */
     }
     if (dateTime) setSelectedDateTime(dateTime);
+  }
+
+  async function handleSave() {
+    try {
+      await savePlant({ ...plant, dateTimeNotification: selectedDateTime });
+    } catch (error) {
+      Alert.alert('Failed to save plant!');
+    }
   }
 
   return (
@@ -77,7 +86,7 @@ export function PlantSave() {
             )}`}</Text>
           </TouchableOpacity>
         )}
-        <Button title='Register plant' onPress={() => {}} />
+        <Button title='Register plant' onPress={handleSave} />
       </View>
     </SafeAreaView>
   );

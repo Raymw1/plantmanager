@@ -42,8 +42,12 @@ export function UserIdentification() {
 
   async function handleSubmit() {
     if (!name) return Alert.alert('Tell us how can we call you 🤔');
-    await AsyncStorage.setItem('@plantmanager:username', name);
-    navigation.navigate('Confirmation');
+    try {
+      await AsyncStorage.setItem('@plantmanager:username', name);
+      navigation.navigate('Confirmation');
+    } catch (error) {
+      Alert.alert('Somethin went wrong saving the username!');
+    }
   }
 
   return (

@@ -6,10 +6,12 @@ import {
 import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UserIdentification';
 import { Confirmation } from '../pages/Confirmation';
-import { PlantProps, PlantSelect } from '../pages/PlantSelect';
+import { PlantSelect } from '../pages/PlantSelect';
 import { PlantSave } from '../pages/PlantSave';
 
 import colors from '../styles/colors';
+
+import type { PlantProps } from '../libs/storage';
 
 type RootStackParamList = {
   Welcome: undefined;

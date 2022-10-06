@@ -17,27 +17,14 @@ import { PlantCardPrimary } from '../components/PlantCardPrimary';
 import api from '../services/api';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+
 import type { ScreenProps } from '../routes/stack.routes';
+import type { PlantProps } from '../libs/storage';
 
 interface EnvironmentProps {
   key: string;
   title: string;
 }
-
-interface PlantProps {
-  id: number;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: string[];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  };
-}
-
-export type { PlantProps };
 
 export function PlantSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
