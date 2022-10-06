@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { SvgFromUri } from 'react-native-svg';
-import { useRoute } from '@react-navigation/core';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
@@ -23,6 +23,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 import { PlantProps, savePlant } from '../libs/storage';
+import type { ScreenProps } from '../routes/stack.routes';
 
 interface Params {
   plant: PlantProps;
@@ -31,6 +32,7 @@ interface Params {
 export function PlantSave() {
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
+  const navigation = useNavigation<ScreenProps>();
   const route = useRoute();
   const { plant } = route.params as Params;
 
@@ -50,6 +52,14 @@ export function PlantSave() {
   async function handleSave() {
     try {
       await savePlant({ ...plant, dateTimeNotification: selectedDateTime });
+      navigation.navigate('Confirmation', {
+        title: 'All done!',
+        subtitle:
+          "Now, it's time to relax. We will always remind you to take care of your plant with lots of love.",
+        icon: 'hug',
+        buttonTitle: 'Oh, cool! :D',
+        nextScreen: 'MyPlants',
+      });
     } catch (error) {
       Alert.alert('Failed to save plant!');
     }

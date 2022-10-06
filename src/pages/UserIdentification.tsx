@@ -44,7 +44,13 @@ export function UserIdentification() {
     if (!name) return Alert.alert('Tell us how can we call you 🤔');
     try {
       await AsyncStorage.setItem('@plantmanager:username', name);
-      navigation.navigate('Confirmation');
+      navigation.navigate('Confirmation', {
+        title: "That's it!",
+        subtitle: "Let's start to taking care of your plants.",
+        icon: 'smile',
+        buttonTitle: 'Start',
+        nextScreen: 'PlantSelect',
+      });
     } catch (error) {
       Alert.alert('Somethin went wrong saving the username!');
     }

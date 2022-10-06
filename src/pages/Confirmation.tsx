@@ -1,27 +1,43 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenProps } from '../routes/stack.routes';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { ScreenProps } from '../routes/stack.routes';
+
 import { Button } from '../components/Button';
+
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
+export interface ConfirmationParams {
+  title: string;
+  subtitle: string;
+  buttonTitle: string;
+  icon: 'smile' | 'hug';
+  nextScreen: 'PlantSelect' | 'MyPlants';
+}
+
+const emojis = {
+  hug: '🤗',
+  smile: '😄',
+};
+
 export function Confirmation() {
   const navigation = useNavigation<ScreenProps>();
+  const routes = useRoute();
+  const { title, subtitle, buttonTitle, icon, nextScreen } =
+    routes.params as ConfirmationParams;
 
   function handleMoveOn() {
-    navigation.navigate('PlantSelect');
+    navigation.navigate(nextScreen);
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.emoji}>😄</Text>
-        <Text style={styles.title}>That's it!</Text>
-        <Text style={styles.subtitle}>
-          Let's start to taking care of your plants.
-        </Text>
+        <Text style={styles.emoji}>{emojis[icon]}</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
         <View style={styles.footer}>
-          <Button title='Start' onPress={handleMoveOn} />
+          <Button title={buttonTitle} onPress={handleMoveOn} />
         </View>
       </View>
     </SafeAreaView>

@@ -5,9 +5,10 @@ import {
 
 import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UserIdentification';
-import { Confirmation } from '../pages/Confirmation';
+import { Confirmation, ConfirmationParams } from '../pages/Confirmation';
 import { PlantSelect } from '../pages/PlantSelect';
 import { PlantSave } from '../pages/PlantSave';
+import { MyPlants } from '../pages/MyPlants';
 
 import colors from '../styles/colors';
 
@@ -16,9 +17,10 @@ import type { PlantProps } from '../libs/storage';
 type RootStackParamList = {
   Welcome: undefined;
   UserIdentification: undefined;
-  Confirmation: undefined;
+  Confirmation: ConfirmationParams;
   PlantSelect: undefined;
   PlantSave: { plant: PlantProps };
+  MyPlants: undefined;
 };
 
 export type ScreenProps = StackNavigationProp<RootStackParamList>;
@@ -40,6 +42,7 @@ const AppRoutes: React.FC = () => (
     <stackRoutes.Screen name='Confirmation' component={Confirmation} />
     <stackRoutes.Screen name='PlantSelect' component={PlantSelect} />
     <stackRoutes.Screen name='PlantSave' component={PlantSave} />
+    <stackRoutes.Screen name='MyPlants' component={MyPlants} />
   </stackRoutes.Navigator>
 );
 
