@@ -17,6 +17,7 @@ import { formatDistance } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
+import { Load } from '../components/Load';
 
 export function MyPlants() {
   const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -39,6 +40,8 @@ export function MyPlants() {
     }
     loadStorageData();
   }, []);
+
+  if (loading) return <Load />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,8 +69,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 30,
-    paddingTop: 50,
+    paddingHorizontal: 32,
+    /* paddingTop: 50, */
     backgroundColor: colors.background,
   },
   spotlight: {

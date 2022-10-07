@@ -13,6 +13,7 @@ const AuthRoutes = () => {
         tabBarActiveTintColor: colors.green,
         tabBarInactiveTintColor: colors.heading,
         tabBarLabelPosition: 'beside-icon',
+        headerShown: false,
         tabBarStyle: {
           /* paddingVertical: 20, */
           /* height: 88, */

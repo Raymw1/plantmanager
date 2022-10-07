@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
