@@ -13,6 +13,7 @@ import { MyPlants } from '../pages/MyPlants';
 import colors from '../styles/colors';
 
 import type { PlantProps } from '../libs/storage';
+import AuthRoutes from './tab.routes';
 
 type RootStackParamList = {
   Welcome: undefined;
@@ -40,9 +41,9 @@ const AppRoutes: React.FC = () => (
       component={UserIdentification}
     />
     <stackRoutes.Screen name='Confirmation' component={Confirmation} />
-    <stackRoutes.Screen name='PlantSelect' component={PlantSelect} />
+    <stackRoutes.Screen name='PlantSelect' component={AuthRoutes} />
     <stackRoutes.Screen name='PlantSave' component={PlantSave} />
-    <stackRoutes.Screen name='MyPlants' component={MyPlants} />
+    <stackRoutes.Screen name='MyPlants' component={AuthRoutes} />
   </stackRoutes.Navigator>
 );
 
